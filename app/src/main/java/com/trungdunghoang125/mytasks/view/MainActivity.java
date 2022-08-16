@@ -1,8 +1,10 @@
-package com.trungdunghoang125.mytasks;
+package com.trungdunghoang125.mytasks.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.trungdunghoang125.mytasks.R;
 
 public class MainActivity extends AppCompatActivity {
 
