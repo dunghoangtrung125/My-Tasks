@@ -6,15 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import com.trungdunghoang125.mytasks.R;
 import com.trungdunghoang125.mytasks.adapter.TaskItemAdapter;
 import com.trungdunghoang125.mytasks.databinding.FragmentTasksBinding;
-import com.trungdunghoang125.mytasks.model.Task;
 import com.trungdunghoang125.mytasks.viewModel.TasksViewModel;
-
-import java.util.List;
 
 public class TasksFragment extends Fragment {
     private FragmentTasksBinding binding;
@@ -45,6 +44,14 @@ public class TasksFragment extends Fragment {
         // observer livedata
         viewModel.getAll().observe(getViewLifecycleOwner(), tasks -> {
             adapter.submitList(tasks);
+        });
+
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                navController.navigate(R.id.action_tasksFragment_to_addTaskFragment);
+            }
         });
 
         return view;

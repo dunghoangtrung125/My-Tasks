@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.trungdunghoang125.mytasks.viewModel.AddTaskViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.AddTaskFragment">
+
+        <EditText
+            android:id="@+id/tv_task_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter a task name"
+            android:text="@={viewModel.newTaskName}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_save_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Save task"
+            app:layout_constraintEnd_toEndOf="@id/tv_task_name"
+            app:layout_constraintStart_toStartOf="@id/tv_task_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_task_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

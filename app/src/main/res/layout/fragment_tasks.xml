@@ -11,34 +11,34 @@
             type="com.trungdunghoang125.mytasks.viewModel.TasksViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/tv_task_name"
+        <LinearLayout
+            android:id="@+id/linear"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter a task name"
-            android:text="@={viewModel.newTaskName}" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_save_task"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_view_tasks_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"/>
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="@{() -> viewModel.addTask()}"
-            android:text="Save task" />
+            android:src="@drawable/ic_add_task"
+            app:layout_anchor="@id/linear"
+            app:layout_anchorGravity="bottom|center" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rc_view_tasks_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2" />
-
-    </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>
