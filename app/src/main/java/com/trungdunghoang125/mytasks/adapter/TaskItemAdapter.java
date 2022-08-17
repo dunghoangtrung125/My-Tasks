@@ -7,20 +7,17 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.trungdunghoang125.mytasks.R;
 import com.trungdunghoang125.mytasks.model.Task;
 
-import java.util.ArrayList;
-import java.util.List;
+public class TaskItemAdapter extends ListAdapter<Task, TaskItemAdapter.TaskViewHolder> {
 
-public class TaskItemAdapter extends RecyclerView.Adapter<TaskItemAdapter.TaskViewHolder> {
-    List<Task> data = new ArrayList<>();
-
-    public void setData(List<Task> data) {
-        this.data = data;
-        notifyDataSetChanged();
+    public TaskItemAdapter(@NonNull DiffUtil.ItemCallback<Task> diffCallback) {
+        super(diffCallback);
     }
 
     @NonNull
@@ -31,18 +28,13 @@ public class TaskItemAdapter extends RecyclerView.Adapter<TaskItemAdapter.TaskVi
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-        Task task = data.get(position);
+        Task task = getItem(position);
         holder.bind(task);
     }
 
-    @Override
-    public int getItemCount() {
-        return data.size();
-    }
-
     static class TaskViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTaskTitle;
-        private CheckBox cbTaskDone;
+        private final TextView tvTaskTitle;
+        private final CheckBox cbTaskDone;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,6 +53,19 @@ public class TaskItemAdapter extends RecyclerView.Adapter<TaskItemAdapter.TaskVi
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_layout, parent, false);
             return new TaskViewHolder(view);
+        }
+    }
+
+    public static class TaskDiff extends DiffUtil.ItemCallback<Task> {
+
+        @Override
+        public boolean areItemsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
+            return oldItem.taskId == newItem.taskId;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
+            return oldItem.taskName.equals(newItem.taskName);
         }
     }
 }

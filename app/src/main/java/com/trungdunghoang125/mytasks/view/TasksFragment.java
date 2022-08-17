@@ -39,13 +39,13 @@ public class TasksFragment extends Fragment {
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
         // set adapter for recycler view
-        TaskItemAdapter adapter = new TaskItemAdapter();
+        TaskItemAdapter adapter = new TaskItemAdapter(new TaskItemAdapter.TaskDiff());
+        binding.rcViewTasksList.setAdapter(adapter);
 
         // observer livedata
         viewModel.getAll().observe(getViewLifecycleOwner(), tasks -> {
-            adapter.setData(tasks);
+            adapter.submitList(tasks);
         });
-        binding.rcViewTasksList.setAdapter(adapter);
 
         return view;
     }
