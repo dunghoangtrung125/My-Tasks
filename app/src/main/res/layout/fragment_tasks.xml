@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add_task"
             app:layout_anchor="@id/linear"
+            android:layout_marginBottom="8dp"
             app:layout_anchorGravity="bottom|center" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

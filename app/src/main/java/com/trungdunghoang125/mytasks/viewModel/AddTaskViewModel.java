@@ -4,8 +4,6 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.trungdunghoang125.mytasks.model.Task;
 import com.trungdunghoang125.mytasks.model.TaskRepository;

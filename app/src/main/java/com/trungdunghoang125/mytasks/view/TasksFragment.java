@@ -11,11 +11,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.trungdunghoang125.mytasks.R;
+import com.trungdunghoang125.mytasks.adapter.ItemClick;
 import com.trungdunghoang125.mytasks.adapter.TaskItemAdapter;
 import com.trungdunghoang125.mytasks.databinding.FragmentTasksBinding;
 import com.trungdunghoang125.mytasks.viewModel.TasksViewModel;
 
-public class TasksFragment extends Fragment {
+public class TasksFragment extends Fragment implements ItemClick {
     private FragmentTasksBinding binding;
     public TasksViewModel viewModel;
 
@@ -38,12 +39,22 @@ public class TasksFragment extends Fragment {
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
         // set adapter for recycler view
-        TaskItemAdapter adapter = new TaskItemAdapter(new TaskItemAdapter.TaskDiff());
+        TaskItemAdapter adapter = new TaskItemAdapter(new TaskItemAdapter.TaskDiff(), this);
         binding.rcViewTasksList.setAdapter(adapter);
 
-        // observer livedata
+        // observer all list livedata
         viewModel.getAll().observe(getViewLifecycleOwner(), tasks -> {
             adapter.submitList(tasks);
+        });
+
+        viewModel.getNavigateToTask().observe(getViewLifecycleOwner(), value -> {
+            if (value != null) {
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                Bundle bundle = new Bundle();
+                bundle.putLong("taskId", value);
+                navController.navigate(R.id.action_tasksFragment_to_taskDetailFragment, bundle);
+                viewModel.onTaskNavigated();
+            }
         });
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
@@ -61,5 +72,15 @@ public class TasksFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onItemClick(Long pos) {
+        viewModel.onTaskClicked(pos);
+    }
+
+    @Override
+    public void onItemLongClick(Long pos) {
+
     }
 }

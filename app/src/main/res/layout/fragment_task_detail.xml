@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.trungdunghoang125.mytasks.viewModel.TaskDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        tools:context=".view.TaskDetailFragment">
+
+        <EditText
+            android:id="@+id/edt_task_name_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.getTask().taskName}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/task_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/edt_task_name_detail"
+            app:layout_constraintTop_toBottomOf="@+id/edt_task_name_detail" />
+
+        <TextView
+            android:id="@+id/tv_task_detail_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Done?"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/task_detail"
+            app:layout_constraintTop_toBottomOf="@id/task_detail" />
+
+        <CheckBox
+            android:id="@+id/cb_task_detail_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@={viewModel.getTask().taskDone}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_task_detail_done"
+            app:layout_constraintStart_toEndOf="@id/tv_task_detail_done"
+            app:layout_constraintTop_toBottomOf="@id/task_detail" />
+
+        <Button
+            android:id="@+id/btn_update_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.updateTask()}"
+            android:text="Update Task"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cb_task_detail_done" />
+
+        <Button
+            android:id="@+id/btn_delete_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.deleteTask()}"
+            android:text="Delete Task"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_update_task" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

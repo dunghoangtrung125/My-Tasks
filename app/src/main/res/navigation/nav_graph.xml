@@ -13,13 +13,17 @@
         <action
             android:id="@+id/action_tasksFragment_to_addTaskFragment"
             app:destination="@id/addTaskFragment" />
+        <action
+            android:id="@+id/action_tasksFragment_to_taskDetailFragment"
+            app:destination="@id/taskDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/addTaskFragment"
         android:name="com.trungdunghoang125.mytasks.view.AddTaskFragment"
-        android:label="AddTaskFragment" >
-        <action
-            android:id="@+id/action_addTaskFragment_to_tasksFragment"
-            app:destination="@id/tasksFragment" />
-    </fragment>
+        android:label="AddTaskFragment" />
+    <fragment
+        android:id="@+id/taskDetailFragment"
+        android:name="com.trungdunghoang125.mytasks.view.TaskDetailFragment"
+        android:label="fragment_task_detail"
+        tools:layout="@layout/fragment_task_detail" />
 </navigation>

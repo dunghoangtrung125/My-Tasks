@@ -23,7 +23,7 @@ public abstract class TaskDatabase extends RoomDatabase {
             synchronized (TaskDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            TaskDatabase.class, "task_database")
+                                    TaskDatabase.class, "task_database")
                             .build();
                 }
             }

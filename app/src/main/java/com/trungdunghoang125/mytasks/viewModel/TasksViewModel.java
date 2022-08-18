@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.trungdunghoang125.mytasks.model.Task;
 import com.trungdunghoang125.mytasks.model.TaskRepository;
@@ -12,6 +13,12 @@ import java.util.List;
 
 public class TasksViewModel extends AndroidViewModel {
     private TaskRepository repository;
+    private MutableLiveData<Long> _navigateToTask = new MutableLiveData<Long>();
+    private LiveData<Long> navigateToTask;
+
+    public LiveData<Long> getNavigateToTask() {
+        return _navigateToTask;
+    }
 
     private final LiveData<List<Task>> allTasks;
 
@@ -23,5 +30,13 @@ public class TasksViewModel extends AndroidViewModel {
 
     public LiveData<List<Task>> getAll() {
         return allTasks;
+    }
+
+    public void onTaskClicked(Long taskId) {
+        _navigateToTask.setValue(taskId);
+    }
+
+    public void onTaskNavigated() {
+        _navigateToTask.setValue(null);
     }
 }
