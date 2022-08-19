@@ -7,9 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
-import com.trungdunghoang125.mytasks.R;
 import com.trungdunghoang125.mytasks.databinding.FragmentTaskDetailBinding;
 import com.trungdunghoang125.mytasks.viewModel.TaskDetailViewModel;
 import com.trungdunghoang125.mytasks.viewModel.TaskDetailViewModelFactory;

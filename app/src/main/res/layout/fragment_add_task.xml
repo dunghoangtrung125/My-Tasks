@@ -12,12 +12,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="16dp"
         tools:context=".view.AddTaskFragment">
 
         <EditText
             android:id="@+id/tv_task_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:hint="Enter a task name"
             android:text="@={viewModel.newTaskName}"
             app:layout_constraintStart_toStartOf="parent"
