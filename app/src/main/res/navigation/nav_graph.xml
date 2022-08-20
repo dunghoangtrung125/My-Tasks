@@ -6,14 +6,14 @@
     app:startDestination="@id/viewHolderFragment">
     <fragment
         android:id="@+id/viewHolderFragment"
-        android:name="com.trungdunghoang125.mytasks.view.ViewHolderFragment"
+        android:name="com.trungdunghoang125.mytasks.view.fragment.ViewHolderFragment"
         android:label="ViewHolderFragment" />
     <fragment
         android:id="@+id/taskDetailFragment"
-        android:name="com.trungdunghoang125.mytasks.view.TaskDetailFragment"
+        android:name="com.trungdunghoang125.mytasks.view.fragment.TaskDetailFragment"
         android:label="TaskDetailFragment" />
     <fragment
         android:id="@+id/addTaskFragment"
-        android:name="com.trungdunghoang125.mytasks.view.AddTaskFragment"
+        android:name="com.trungdunghoang125.mytasks.view.fragment.AddTaskFragment"
         android:label="AddTaskFragment" />
 </navigation>

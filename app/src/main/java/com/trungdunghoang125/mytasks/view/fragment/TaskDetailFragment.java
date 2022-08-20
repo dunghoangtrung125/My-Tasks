@@ -1,4 +1,4 @@
-package com.trungdunghoang125.mytasks.view;
+package com.trungdunghoang125.mytasks.view.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -28,4 +28,7 @@ public interface TaskDAO {
 
     @Query("SELECT * FROM tasks_table WHERE task_done = 1 ORDER BY taskId DESC")
     LiveData<List<Task>> getDoneTasks();
+
+    @Query("SELECT * FROM tasks_table WHERE task_done = 0 AND task_importance = 1 ORDER BY taskId DESC")
+    LiveData<List<Task>> getImportantTasks();
 }

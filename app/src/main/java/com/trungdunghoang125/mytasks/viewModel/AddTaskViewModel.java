@@ -10,6 +10,7 @@ import com.trungdunghoang125.mytasks.model.TaskRepository;
 
 public class AddTaskViewModel extends AndroidViewModel {
     public String newTaskName = "";
+    public String newTaskDescription = "";
     private TaskRepository repository;
 
     public AddTaskViewModel(@NonNull Application application) {
@@ -17,9 +18,11 @@ public class AddTaskViewModel extends AndroidViewModel {
         repository = new TaskRepository(application);
     }
 
-    public void addTask(String newTaskName) {
+    public void addTask(String newTaskName, String newTaskDescription, Boolean newTaskImportance) {
         Task task = new Task();
         task.taskName = newTaskName;
+        task.taskDetail = newTaskDescription;
+        task.importance = newTaskImportance;
         repository.insert(task);
     }
 }

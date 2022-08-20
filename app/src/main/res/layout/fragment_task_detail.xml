@@ -13,41 +13,66 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
-        tools:context=".view.TaskDetailFragment">
+        tools:context=".view.fragment.TaskDetailFragment">
+
+        <CheckBox
+            android:id="@+id/cb_task_detail_star"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/checkbox_selector"
+            android:button="@null"
+            android:checked="@{viewModel.getTask().importance}"
+            android:onClick="@{() -> viewModel.getTask().importance}"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_delete_task"
+            app:layout_constraintEnd_toStartOf="@+id/btn_delete_task"
+            app:layout_constraintTop_toTopOf="@id/btn_delete_task" />
+
+        <Button
+            android:id="@+id/btn_delete_task"
+            android:layout_width="30dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="8dp"
+            android:drawableBottom="@drawable/ic_delete"
+            android:onClick="@{() -> viewModel.deleteTask()}"
+            android:text="Delete Task"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/edt_task_name_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:background="@android:color/transparent"
+            android:hint="Enter title"
             android:text="@={viewModel.getTask().taskName}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_delete_task" />
 
-        <TextView
+        <EditText
             android:id="@+id/task_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/ic_line"
+            android:drawablePadding="8dp"
+            android:hint="Task description"
+            android:text="@={viewModel.getTask().taskDetail}"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/edt_task_name_detail"
             app:layout_constraintTop_toBottomOf="@+id/edt_task_name_detail" />
 
-        <TextView
-            android:id="@+id/tv_task_detail_done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Done?"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@id/task_detail"
-            app:layout_constraintTop_toBottomOf="@id/task_detail" />
-
         <CheckBox
             android:id="@+id/cb_task_detail_done"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:checked="@={viewModel.getTask().taskDone}"
-            app:layout_constraintBottom_toBottomOf="@id/tv_task_detail_done"
-            app:layout_constraintStart_toEndOf="@id/tv_task_detail_done"
+            android:text="Done?"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/task_detail" />
 
         <Button
@@ -60,14 +85,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cb_task_detail_done" />
 
-        <Button
-            android:id="@+id/btn_delete_task"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.deleteTask()}"
-            android:text="Delete Task"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_update_task" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,12 +1,11 @@
-package com.trungdunghoang125.mytasks.adapter;
+package com.trungdunghoang125.mytasks.view.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.trungdunghoang125.mytasks.view.TaskDoneFragment;
-import com.trungdunghoang125.mytasks.view.TasksFragment;
+import com.trungdunghoang125.mytasks.view.fragment.TaskDoneFragment;
+import com.trungdunghoang125.mytasks.view.fragment.TasksFragment;
 
 public class VPAdapter extends FragmentStateAdapter {
 

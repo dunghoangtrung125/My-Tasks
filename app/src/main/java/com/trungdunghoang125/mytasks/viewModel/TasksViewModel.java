@@ -15,6 +15,7 @@ public class TasksViewModel extends AndroidViewModel {
     private TaskRepository repository;
     private MutableLiveData<Long> _navigateToTask = new MutableLiveData<Long>();
     private LiveData<Long> navigateToTask;
+    private LiveData<Task> task;
 
     public LiveData<Long> getNavigateToTask() {
         return _navigateToTask;
@@ -38,5 +39,15 @@ public class TasksViewModel extends AndroidViewModel {
 
     public void onTaskNavigated() {
         _navigateToTask.setValue(null);
+    }
+
+    public void updateTaskDone(Task task, Boolean state) {
+        task.taskDone = state;
+        repository.update(task);
+    }
+
+    public void updateTaskImportance(Task task, Boolean state) {
+        task.importance = state;
+        repository.update(task);
     }
 }

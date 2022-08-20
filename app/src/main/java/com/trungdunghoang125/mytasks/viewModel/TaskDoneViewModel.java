@@ -39,4 +39,14 @@ public class TaskDoneViewModel extends AndroidViewModel {
     public void onTaskNavigated() {
         _navigateToTask.setValue(null);
     }
+
+    public void updateTaskDone(Task task, Boolean state) {
+        task.taskDone = state;
+        repository.update(task);
+    }
+
+    public void updateTaskImportance(Task task, Boolean state) {
+        task.importance = state;
+        repository.update(task);
+    }
 }

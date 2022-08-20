@@ -3,10 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/checkbox_selector.xml" value="0.1555" />
         <entry key="app/src/main/res/layout/activity_add_task.xml" value="0.19375" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.19375" />
-        <entry key="app/src/main/res/layout/fragment_add_task.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_task_detail.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.18072916666666666" />
+        <entry key="app/src/main/res/layout/fragment_add_task.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_task_detail.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_task_done.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/layout/fragment_tasks.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/fragment_view_holder.xml" value="0.18072916666666666" />

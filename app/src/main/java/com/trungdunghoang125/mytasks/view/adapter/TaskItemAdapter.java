@@ -1,11 +1,11 @@
-package com.trungdunghoang125.mytasks.adapter;
+package com.trungdunghoang125.mytasks.view.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.trungdunghoang125.mytasks.R;
 import com.trungdunghoang125.mytasks.model.Task;
+import com.trungdunghoang125.mytasks.model.TaskRepository;
 
 public class TaskItemAdapter extends ListAdapter<Task, TaskItemAdapter.TaskViewHolder> {
     private ItemClick itemClick;
@@ -36,9 +37,28 @@ public class TaskItemAdapter extends ListAdapter<Task, TaskItemAdapter.TaskViewH
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String text = "Item " + task.taskId + " click";
-                Toast.makeText(view.getContext(), text, Toast.LENGTH_SHORT).show();
                 itemClick.onItemClick(task.taskId);
+            }
+        });
+
+        holder.cbTaskDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                itemClick.onCbTaskDoneClick(task, isChecked);
+            }
+        });
+
+        holder.cbTaskDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemClick.onCbTaskDoneClick(task, holder.cbTaskDone.isChecked());
+            }
+        });
+
+        holder.cbImportantTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemClick.onCbImportanceClick(task, holder.cbImportantTask.isChecked());
             }
         });
     }
@@ -46,16 +66,19 @@ public class TaskItemAdapter extends ListAdapter<Task, TaskItemAdapter.TaskViewH
     static class TaskViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvTaskTitle;
         private final CheckBox cbTaskDone;
+        private final CheckBox cbImportantTask;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTaskTitle = itemView.findViewById(R.id.tv_task_name);
             cbTaskDone = itemView.findViewById(R.id.cb_task_done);
+            cbImportantTask = itemView.findViewById(R.id.cb_star_item);
         }
 
         void bind(Task task) {
             tvTaskTitle.setText(task.taskName);
             cbTaskDone.setChecked(task.taskDone);
+            cbImportantTask.setChecked(task.importance);
         }
 
         static TaskViewHolder create(ViewGroup parent) {
@@ -74,7 +97,9 @@ public class TaskItemAdapter extends ListAdapter<Task, TaskItemAdapter.TaskViewH
 
         @Override
         public boolean areContentsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
-            return oldItem.taskName.equals(newItem.taskName) && oldItem.taskDone.equals(newItem.taskDone);
+            return oldItem.taskName.equals(newItem.taskName)
+                    && oldItem.taskDone.equals(newItem.taskDone)
+                    && oldItem.importance.equals(newItem.importance);
         }
     }
 }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,32 +10,81 @@
             type="com.trungdunghoang125.mytasks.viewModel.AddTaskViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
-        tools:context=".view.AddTaskFragment">
+        tools:context=".view.fragment.AddTaskFragment">
 
         <EditText
             android:id="@+id/tv_task_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:background="@android:color/transparent"
-            android:hint="Enter a task name"
+            android:hint="Enter new task title"
             android:text="@={viewModel.newTaskName}"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btn_save_task"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/edt_add_task_detail"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Save task"
+            android:layout_margin="16dp"
+            android:background="@android:color/transparent"
+            android:hint="Add details"
+            android:text="@={viewModel.newTaskDescription}"
+            android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/tv_task_name"
             app:layout_constraintStart_toStartOf="@id/tv_task_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_task_name" />
+
+        <ImageButton
+            android:id="@+id/img_show_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_line"
+            app:layout_constraintEnd_toStartOf="@+id/img_time_picker"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edt_add_task_detail" />
+
+        <CheckBox
+            android:id="@+id/cb_star_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/checkbox_selector"
+            android:button="@null"
+            app:layout_constraintBottom_toBottomOf="@id/img_show_detail"
+            app:layout_constraintEnd_toStartOf="@+id/img_time_picker"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/img_show_detail"
+            app:layout_constraintTop_toTopOf="@id/img_show_detail" />
+
+        <ImageButton
+            android:id="@+id/img_time_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_calendar"
+            app:layout_constraintEnd_toStartOf="@+id/btn_save_task"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/cb_star_button"
+            app:layout_constraintTop_toTopOf="@id/img_show_detail" />
+
+        <TextView
+            android:id="@+id/btn_save_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/img_show_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/cb_star_button"
+            app:layout_constraintTop_toTopOf="@id/img_show_detail" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

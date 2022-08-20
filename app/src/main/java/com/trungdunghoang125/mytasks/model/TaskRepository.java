@@ -10,6 +10,7 @@ public class TaskRepository {
     private TaskDAO dao;
     private LiveData<List<Task>> allTasks;
     private LiveData<List<Task>> allDoneTasks;
+    private LiveData<List<Task>> importantTasks;
     private LiveData<Task> task;
 
     public TaskRepository(Application application) {
@@ -17,6 +18,7 @@ public class TaskRepository {
         dao = db.dao();
         allTasks = dao.getAll();
         allDoneTasks = dao.getDoneTasks();
+        importantTasks = dao.getImportantTasks();
     }
 
     public LiveData<List<Task>> getAll() {
@@ -26,6 +28,8 @@ public class TaskRepository {
     public LiveData<List<Task>> getAllDoneTasks() {
         return allDoneTasks;
     }
+
+    public LiveData<List<Task>> getImportantTasks() { return importantTasks; }
 
     public void insert(Task task) {
         TaskDatabase.databaseWriteExecutor.execute(() -> {
