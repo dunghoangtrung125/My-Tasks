@@ -11,10 +11,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.trungdunghoang125.mytasks.R;
+import com.trungdunghoang125.mytasks.databinding.FragmentTasksBinding;
 import com.trungdunghoang125.mytasks.model.Task;
 import com.trungdunghoang125.mytasks.view.adapter.ItemClick;
 import com.trungdunghoang125.mytasks.view.adapter.TaskItemAdapter;
-import com.trungdunghoang125.mytasks.databinding.FragmentTasksBinding;
 import com.trungdunghoang125.mytasks.viewModel.TasksViewModel;
 
 public class TasksFragment extends Fragment implements ItemClick {

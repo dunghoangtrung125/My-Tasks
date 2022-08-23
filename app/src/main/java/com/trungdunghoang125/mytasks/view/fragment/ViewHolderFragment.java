@@ -39,11 +39,13 @@ public class ViewHolderFragment extends Fragment {
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 switch (position) {
                     case 0:
-                        tab.setText("Task");
+                        tab.setText("My tasks");
+                        tab.setIcon(R.drawable.ic_work);
                         break;
 
                     case 1:
-                        tab.setText("TaskDone");
+                        tab.setText("Complete Task");
+                        tab.setIcon(R.drawable.ic_done);
                         break;
                 }
             }

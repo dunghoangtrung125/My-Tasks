@@ -65,18 +65,21 @@ public class TaskItemAdapter extends ListAdapter<Task, TaskItemAdapter.TaskViewH
 
     static class TaskViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvTaskTitle;
+        private final TextView tvTaskDetail;
         private final CheckBox cbTaskDone;
         private final CheckBox cbImportantTask;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTaskTitle = itemView.findViewById(R.id.tv_task_name);
+            tvTaskDetail = itemView.findViewById(R.id.tv_task_detail);
             cbTaskDone = itemView.findViewById(R.id.cb_task_done);
             cbImportantTask = itemView.findViewById(R.id.cb_star_item);
         }
 
         void bind(Task task) {
             tvTaskTitle.setText(task.taskName);
+            tvTaskDetail.setText(task.taskDetail);
             cbTaskDone.setChecked(task.taskDone);
             cbImportantTask.setChecked(task.importance);
         }
@@ -98,6 +101,7 @@ public class TaskItemAdapter extends ListAdapter<Task, TaskItemAdapter.TaskViewH
         @Override
         public boolean areContentsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
             return oldItem.taskName.equals(newItem.taskName)
+                    && oldItem.taskDetail.equals(newItem.taskDetail)
                     && oldItem.taskDone.equals(newItem.taskDone)
                     && oldItem.importance.equals(newItem.importance);
         }

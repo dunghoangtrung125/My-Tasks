@@ -22,8 +22,7 @@
             android:layout_marginRight="16dp"
             android:background="@drawable/checkbox_selector"
             android:button="@null"
-            android:checked="@{viewModel.getTask().importance}"
-            android:onClick="@{() -> viewModel.getTask().importance}"
+            android:checked="@={viewModel.getTask().importance}"
             app:layout_constraintBottom_toBottomOf="@+id/btn_delete_task"
             app:layout_constraintEnd_toStartOf="@+id/btn_delete_task"
             app:layout_constraintTop_toTopOf="@id/btn_delete_task" />
@@ -33,8 +32,8 @@
             android:layout_width="30dp"
             android:layout_height="45dp"
             android:layout_marginRight="8dp"
+            android:background="@android:color/transparent"
             android:drawableBottom="@drawable/ic_delete"
-            android:onClick="@{() -> viewModel.deleteTask()}"
             android:text="Delete Task"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

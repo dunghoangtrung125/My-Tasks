@@ -1,5 +1,7 @@
 package com.trungdunghoang125.mytasks.view.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,12 +39,36 @@ public class TaskDetailFragment extends Fragment {
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
+        binding.btnDeleteTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("Delete this task?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                viewModel.deleteTask();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        })
+                        .setCancelable(false)
+                        .create()
+                        .show();
+            }
+        });
+
         viewModel.getNavigateBack().observe(getViewLifecycleOwner(), value -> {
             if (value) {
                 requireActivity().onBackPressed();
                 viewModel.isNavigated();
             }
         });
+
         return view;
     }
 }

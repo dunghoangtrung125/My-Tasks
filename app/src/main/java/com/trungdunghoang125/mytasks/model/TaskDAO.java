@@ -23,7 +23,7 @@ public interface TaskDAO {
     @Query("SELECT * FROM tasks_table WHERE taskId = :taskId")
     LiveData<Task> get(Long taskId);
 
-    @Query("SELECT * FROM tasks_table WHERE task_done = 0 ORDER BY taskId DESC")
+    @Query("SELECT * FROM tasks_table WHERE task_done = 0 ORDER BY taskId AND task_importance = 1 DESC")
     LiveData<List<Task>> getAll();
 
     @Query("SELECT * FROM tasks_table WHERE task_done = 1 ORDER BY taskId DESC")

@@ -1,10 +1,12 @@
 package com.trungdunghoang125.mytasks.view.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +18,7 @@ import com.trungdunghoang125.mytasks.viewModel.AddTaskViewModel;
 public class AddTaskFragment extends Fragment {
     FragmentAddTaskBinding binding;
     AddTaskViewModel viewModel;
+    int hour, minute;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -42,6 +45,21 @@ public class AddTaskFragment extends Fragment {
 
         binding.imgShowDetail.setOnClickListener(view1 -> binding.edtAddTaskDetail.setVisibility(View.VISIBLE));
 
+        binding.btnTimePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectHour, int selectMinute) {
+                        hour = selectHour;
+                        minute = selectMinute;
+                    }
+                };
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), onTimeSetListener, hour, minute, true);
+                timePickerDialog.setTitle("Select time");
+                timePickerDialog.show();
+            }
+        });
         return view;
     }
 
