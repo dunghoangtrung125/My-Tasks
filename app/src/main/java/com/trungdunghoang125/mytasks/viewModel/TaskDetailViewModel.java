@@ -1,6 +1,7 @@
 package com.trungdunghoang125.mytasks.viewModel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -12,7 +13,7 @@ import com.trungdunghoang125.mytasks.model.TaskRepository;
 
 public class TaskDetailViewModel extends AndroidViewModel {
     TaskRepository repository;
-    private final Long taskId;
+    private final int taskId;
     private LiveData<Task> task;
     private MutableLiveData<Boolean> _navigateBack = new MutableLiveData<Boolean>(false);
     private LiveData<Boolean> navigateBack;
@@ -21,7 +22,7 @@ public class TaskDetailViewModel extends AndroidViewModel {
         return _navigateBack;
     }
 
-    public TaskDetailViewModel(@NonNull Application application, Long taskId) {
+    public TaskDetailViewModel(@NonNull Application application, int taskId) {
         super(application);
         this.taskId = taskId;
         repository = new TaskRepository(application);

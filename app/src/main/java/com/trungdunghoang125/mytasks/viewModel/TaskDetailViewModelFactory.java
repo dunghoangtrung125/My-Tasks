@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModelProvider;
 public class TaskDetailViewModelFactory implements ViewModelProvider.Factory {
     @NonNull
     private final Application application;
-    private final Long taskId;
+    private final int taskId;
 
-    public TaskDetailViewModelFactory(@NonNull Application application, Long taskId) {
+    public TaskDetailViewModelFactory(@NonNull Application application, int taskId) {
         this.application = application;
         this.taskId = taskId;
     }

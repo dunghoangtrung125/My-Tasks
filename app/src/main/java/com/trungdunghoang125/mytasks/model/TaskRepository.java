@@ -10,15 +10,12 @@ public class TaskRepository {
     private TaskDAO dao;
     private LiveData<List<Task>> allTasks;
     private LiveData<List<Task>> allDoneTasks;
-    private LiveData<List<Task>> importantTasks;
-    private LiveData<Task> task;
 
     public TaskRepository(Application application) {
         TaskDatabase db = TaskDatabase.getInstance(application);
         dao = db.dao();
         allTasks = dao.getAll();
         allDoneTasks = dao.getDoneTasks();
-        importantTasks = dao.getImportantTasks();
     }
 
     public LiveData<List<Task>> getAll() {
@@ -29,17 +26,18 @@ public class TaskRepository {
         return allDoneTasks;
     }
 
-    public LiveData<List<Task>> getImportantTasks() { return importantTasks; }
-
     public void insert(Task task) {
         TaskDatabase.databaseWriteExecutor.execute(() -> {
             dao.insert(task);
         });
     }
 
-    public LiveData<Task> get(Long taskId) {
-        task = dao.get(taskId);
-        return task;
+    public LiveData<Task> get(int taskId) {
+        return dao.get(taskId);
+    }
+
+    public Task getTaskByID(int taskId) {
+        return dao.getTaskByID(taskId);
     }
 
     public void update(Task task) {

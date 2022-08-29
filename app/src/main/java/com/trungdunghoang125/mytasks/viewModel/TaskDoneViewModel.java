@@ -13,10 +13,10 @@ import java.util.List;
 
 public class TaskDoneViewModel extends AndroidViewModel {
     private TaskRepository repository;
-    private MutableLiveData<Long> _navigateToTask = new MutableLiveData<Long>();
+    private MutableLiveData<Integer> _navigateToTask = new MutableLiveData<Integer>();
     private LiveData<Long> navigateToTask;
 
-    public LiveData<Long> getNavigateToTask() {
+    public LiveData<Integer> getNavigateToTask() {
         return _navigateToTask;
     }
 
@@ -32,7 +32,7 @@ public class TaskDoneViewModel extends AndroidViewModel {
         return allDoneTasks;
     }
 
-    public void onTaskClicked(Long taskId) {
+    public void onTaskClicked(int taskId) {
         _navigateToTask.setValue(taskId);
     }
 

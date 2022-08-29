@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.trungdunghoang125.mytasks.R;
 import com.trungdunghoang125.mytasks.model.Task;
-import com.trungdunghoang125.mytasks.model.TaskRepository;
 
 public class TaskItemAdapter extends ListAdapter<Task, TaskItemAdapter.TaskViewHolder> {
     private ItemClick itemClick;
@@ -38,13 +36,6 @@ public class TaskItemAdapter extends ListAdapter<Task, TaskItemAdapter.TaskViewH
             @Override
             public void onClick(View view) {
                 itemClick.onItemClick(task.taskId);
-            }
-        });
-
-        holder.cbTaskDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                itemClick.onCbTaskDoneClick(task, isChecked);
             }
         });
 
@@ -95,7 +86,7 @@ public class TaskItemAdapter extends ListAdapter<Task, TaskItemAdapter.TaskViewH
 
         @Override
         public boolean areItemsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
-            return oldItem.taskId.equals(newItem.taskId);
+            return oldItem.taskId == newItem.taskId;
         }
 
         @Override

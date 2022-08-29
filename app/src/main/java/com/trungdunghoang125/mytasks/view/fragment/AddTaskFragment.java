@@ -13,12 +13,21 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.trungdunghoang125.mytasks.databinding.FragmentAddTaskBinding;
+import com.trungdunghoang125.mytasks.reminder.TaskAlarm;
 import com.trungdunghoang125.mytasks.viewModel.AddTaskViewModel;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Random;
 
 public class AddTaskFragment extends Fragment {
     FragmentAddTaskBinding binding;
     AddTaskViewModel viewModel;
     int hour, minute;
+    Calendar calendar;
+    int requestCode = -1;
+    Long systemMillis = 0L;
+    Boolean isSetAlert = false;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -35,10 +44,21 @@ public class AddTaskFragment extends Fragment {
             String taskName = binding.tvTaskName.getText().toString();
             String taskDescription = binding.edtAddTaskDetail.getText().toString();
             Boolean taskImportance = binding.cbStarButton.isChecked();
+            Boolean isDailyTask = binding.cbDailyTask.isChecked();
             if (taskName.length() != 0) {
                 binding.btnSaveTask.setTextColor(android.R.color.holo_blue_light);
-                viewModel.addTask(taskName, taskDescription, taskImportance);
+                int ID = new Random().nextInt(Integer.MAX_VALUE);
+                requestCode = ID;
+                systemMillis = System.currentTimeMillis();
+                viewModel.addTask(ID, taskName, taskDescription, false, taskImportance, systemMillis, isSetAlert, hour, minute, isDailyTask);
                 requireActivity().onBackPressed();
+
+                Boolean everydayTask = binding.cbDailyTask.isChecked();
+                if (requestCode != -1) {
+                    if (everydayTask) {
+                        setDailyTaskAlarm();
+                    } else setTodayTask();
+                }
             } else
                 Toast.makeText(getContext(), "Please enter a task name", Toast.LENGTH_SHORT).show();
         });
@@ -53,6 +73,12 @@ public class AddTaskFragment extends Fragment {
                     public void onTimeSet(TimePicker timePicker, int selectHour, int selectMinute) {
                         hour = selectHour;
                         minute = selectMinute;
+                        isSetAlert = true;
+                        calendar = Calendar.getInstance();
+                        calendar.set(Calendar.HOUR_OF_DAY, hour);
+                        calendar.set(Calendar.MINUTE, minute);
+                        calendar.set(Calendar.SECOND, 0);
+                        updateTimeText(calendar);
                     }
                 };
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), onTimeSetListener, hour, minute, true);
@@ -60,12 +86,35 @@ public class AddTaskFragment extends Fragment {
                 timePickerDialog.show();
             }
         });
+
         return view;
+    }
+
+    private void setTodayTask() {
+        TaskAlarm taskAlarm = new TaskAlarm();
+        if (calendar != null) {
+            taskAlarm.setTodayTask(getContext(), requestCode, calendar);
+        }
+    }
+
+    private void setDailyTaskAlarm() {
+        TaskAlarm taskAlarm = new TaskAlarm();
+        if (calendar != null) {
+            taskAlarm.setDailyTask(getContext(), requestCode, calendar);
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void updateTimeText(Calendar calendar) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        String timeText = "Time alert: ";
+        timeText += simpleDateFormat.format(calendar.getTime());
+        binding.tvTime.setVisibility(View.VISIBLE);
+        binding.tvTime.setText(timeText);
     }
 }

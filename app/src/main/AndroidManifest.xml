@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.trungdunghoang125.mytasks">
 
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,7 +18,10 @@
         android:theme="@style/Theme.MyTasks"
         tools:targetApi="31">
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.activity.TaskAlertActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <receiver android:name=".reminder.TaskBroadcastReceiver"
+            android:exported="true"/>
+
+        <service android:name=".reminder.NotificationService" />
+    </application>
 </manifest>

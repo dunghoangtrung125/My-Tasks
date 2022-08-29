@@ -13,9 +13,12 @@ import androidx.navigation.Navigation;
 import com.trungdunghoang125.mytasks.R;
 import com.trungdunghoang125.mytasks.databinding.FragmentTasksBinding;
 import com.trungdunghoang125.mytasks.model.Task;
+import com.trungdunghoang125.mytasks.reminder.TaskAlarm;
 import com.trungdunghoang125.mytasks.view.adapter.ItemClick;
 import com.trungdunghoang125.mytasks.view.adapter.TaskItemAdapter;
 import com.trungdunghoang125.mytasks.viewModel.TasksViewModel;
+
+import java.util.Calendar;
 
 public class TasksFragment extends Fragment implements ItemClick {
     private FragmentTasksBinding binding;
@@ -51,7 +54,7 @@ public class TasksFragment extends Fragment implements ItemClick {
             if (value != null) {
                 NavController navController = Navigation.findNavController(getView());
                 Bundle bundle = new Bundle();
-                bundle.putLong("taskId", value);
+                bundle.putInt("taskId", value);
                 navController.navigate(R.id.taskDetailFragment, bundle);
                 viewModel.onTaskNavigated();
             }
@@ -67,13 +70,36 @@ public class TasksFragment extends Fragment implements ItemClick {
     }
 
     @Override
-    public void onItemClick(Long pos) {
+    public void onItemClick(int pos) {
         viewModel.onTaskClicked(pos);
     }
 
     @Override
-    public void onCbTaskDoneClick(Task task, Boolean state) {
-        viewModel.updateTaskDone(task, state);
+    public void onCbTaskDoneClick(Task task, Boolean done) {
+        TaskAlarm taskAlarm = new TaskAlarm();
+        if (done && task.isSetAlert) {
+            task.isSetAlert = false;
+            taskAlarm.cancelTaskAlarm(getContext(), task.taskId);
+        }
+
+        if (!done && task.isSetAlert && task.isDailyTask) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, task.hour);
+            calendar.set(Calendar.MINUTE, task.minute);
+            calendar.set(Calendar.SECOND, 0);
+            task.isSetAlert = true;
+            taskAlarm.setDailyTask(getContext(), task.taskId, calendar);
+        }
+
+        if (!done && task.isSetAlert && !task.isDailyTask) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, task.hour);
+            calendar.set(Calendar.MINUTE, task.minute);
+            calendar.set(Calendar.SECOND, 0);
+            task.isSetAlert = false;
+            taskAlarm.setTodayTask(getContext(), task.taskId, calendar);
+        }
+        viewModel.updateTaskDone(task, done);
     }
 
     @Override

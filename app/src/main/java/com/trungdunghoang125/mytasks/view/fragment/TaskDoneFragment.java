@@ -13,10 +13,13 @@ import android.view.ViewGroup;
 
 import com.trungdunghoang125.mytasks.R;
 import com.trungdunghoang125.mytasks.model.Task;
+import com.trungdunghoang125.mytasks.reminder.TaskAlarm;
 import com.trungdunghoang125.mytasks.view.adapter.ItemClick;
 import com.trungdunghoang125.mytasks.view.adapter.TaskItemAdapter;
 import com.trungdunghoang125.mytasks.databinding.FragmentTaskDoneBinding;
 import com.trungdunghoang125.mytasks.viewModel.TaskDoneViewModel;
+
+import java.util.Calendar;
 
 public class TaskDoneFragment extends Fragment implements ItemClick {
     FragmentTaskDoneBinding binding;
@@ -65,18 +68,34 @@ public class TaskDoneFragment extends Fragment implements ItemClick {
     }
 
     @Override
-    public void onItemClick(Long pos) {
+    public void onItemClick(int pos) {
         viewModel.onTaskClicked(pos);
     }
 
     @Override
-    public void onCbTaskDoneClick(Task task, Boolean state) {
-        viewModel.updateTaskDone(task, state);
+    public void onCbTaskDoneClick(Task task, Boolean done) {
+        TaskAlarm taskAlarm = new TaskAlarm();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, task.hour);
+        calendar.set(Calendar.MINUTE, task.minute);
+        calendar.set(Calendar.SECOND, 0);
+        if (task.hour != 0){
+            task.isSetAlert = true;
+        }
+        if (task.isSetAlert && task.isDailyTask) {
+            taskAlarm.setDailyTask(getContext(), task.taskId, calendar);
+        }
+
+        if (task.isSetAlert && !task.isDailyTask) {
+            if (System.currentTimeMillis() > calendar.getTimeInMillis()) {
+                taskAlarm.setTodayTask(getContext(), task.taskId, calendar);
+            }
+        }
+        viewModel.updateTaskDone(task, done);
     }
 
     @Override
     public void onCbImportanceClick(Task task, Boolean isImportant) {
         viewModel.updateTaskImportance(task, isImportant);
     }
-
 }

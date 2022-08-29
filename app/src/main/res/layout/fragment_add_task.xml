@@ -45,8 +45,8 @@
             android:id="@+id/img_show_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_line"
             android:layout_marginTop="16dp"
+            android:src="@drawable/ic_line"
             app:layout_constraintEnd_toStartOf="@+id/cb_star_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,25 +75,36 @@
             app:layout_constraintStart_toEndOf="@+id/cb_star_button"
             app:layout_constraintTop_toTopOf="@+id/img_show_detail" />
 
-
-        <CheckBox
-            android:id="@+id/cb_recurring_everyday"
+        <TextView
+            android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:text="Every day task?"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="16dp"
+            android:text="19:20 PM"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_show_detail" />
 
-        <TextView
+        <CheckBox
+            android:id="@+id/cb_daily_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Daily Task"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_time" />
+
+        <Button
             android:id="@+id/btn_save_task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="Save"
-            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cb_recurring_everyday" />
+            app:layout_constraintTop_toBottomOf="@+id/cb_daily_task" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -21,14 +21,14 @@ public interface TaskDAO {
     void delete(Task task);
 
     @Query("SELECT * FROM tasks_table WHERE taskId = :taskId")
-    LiveData<Task> get(Long taskId);
+    LiveData<Task> get(int taskId);
 
-    @Query("SELECT * FROM tasks_table WHERE task_done = 0 ORDER BY taskId AND task_importance = 1 DESC")
+    @Query("SELECT * FROM tasks_table WHERE task_done = 0 ORDER BY task_importance = 0, task_hour, task_minute ASC")
     LiveData<List<Task>> getAll();
 
-    @Query("SELECT * FROM tasks_table WHERE task_done = 1 ORDER BY taskId DESC")
+    @Query("SELECT * FROM tasks_table WHERE task_done = 1 ORDER BY time_create DESC")
     LiveData<List<Task>> getDoneTasks();
 
-    @Query("SELECT * FROM tasks_table WHERE task_done = 0 AND task_importance = 1 ORDER BY taskId DESC")
-    LiveData<List<Task>> getImportantTasks();
+    @Query("SELECT * FROM tasks_table WHERE taskId = :taskId")
+    Task getTaskByID(int taskId);
 }

@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Task.class}, version = 3, exportSchema = false)
+@Database(entities = {Task.class}, version = 7, exportSchema = false)
 public abstract class TaskDatabase extends RoomDatabase {
 
     public abstract TaskDAO dao();
@@ -18,7 +18,7 @@ public abstract class TaskDatabase extends RoomDatabase {
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static TaskDatabase getInstance(final Context context) {
+    public static TaskDatabase getInstance(final Context context) {
         if (INSTANCE == null) {
             synchronized (TaskDatabase.class) {
                 if (INSTANCE == null) {

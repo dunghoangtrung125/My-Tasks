@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,9 +10,7 @@
             type="com.trungdunghoang125.mytasks.viewModel.TaskDetailViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.fragment.TaskDetailFragment">
@@ -65,24 +65,57 @@
 
         <CheckBox
             android:id="@+id/cb_task_detail_done"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:checked="@={viewModel.getTask().taskDone}"
             android:text="Done?"
             android:textSize="16sp"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/task_detail" />
+
+        <ImageButton
+            android:id="@+id/btn_time_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:src="@drawable/ic_calendar"
+            app:layout_constraintBottom_toBottomOf="@+id/cb_task_detail_done"
+            app:layout_constraintStart_toEndOf="@+id/cb_task_detail_done"
+            app:layout_constraintTop_toTopOf="@id/cb_task_detail_done" />
+
+        <TextView
+            android:id="@+id/tv_time_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Time alert 9:20"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/cb_task_detail_done"
+            app:layout_constraintTop_toBottomOf="@id/cb_task_detail_done" />
+
+        <CheckBox
+            android:id="@+id/cb_daily_task_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:checked="@={viewModel.task.isDailyTask}"
+            android:text="Daily task?"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_time_detail"
+            app:layout_constraintStart_toEndOf="@id/tv_time_detail"
+            app:layout_constraintTop_toTopOf="@+id/tv_time_detail" />
 
         <Button
             android:id="@+id/btn_update_task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.updateTask()}"
+            android:layout_marginTop="16dp"
             android:text="Update Task"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cb_task_detail_done" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_time_detail" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
