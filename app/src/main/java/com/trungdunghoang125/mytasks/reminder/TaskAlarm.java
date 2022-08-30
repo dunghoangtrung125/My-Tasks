@@ -4,14 +4,12 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
-
-import com.trungdunghoang125.mytasks.model.TaskRepository;
 
 import java.util.Calendar;
 
 public class TaskAlarm {
+    private static final String TAG = "tranmyle1811";
     final long DAILY_INTERVAL = 24 * 60 * 60 * 1000;
 
     public void setTodayTask(Context context, int taskID, Calendar calendar) {
@@ -23,18 +21,16 @@ public class TaskAlarm {
         Intent intent = new Intent(context, TaskBroadcastReceiver.class);
         intent.putExtra("ALARM", "alarm");
         intent.putExtra("taskId", taskID);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, taskID, intent, PendingIntent.FLAG_MUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, taskID, intent, PendingIntent.FLAG_IMMUTABLE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-        Log.v("Alarm", "setTodayTask: ");
+        Log.v(TAG, "setTodayTask: ");
     }
 
     public void setDailyTask(Context context, int taskID, Calendar calendar) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, TaskBroadcastReceiver.class);
-        Bundle bundle = new Bundle();
-        bundle.putInt("taskId", taskID);
         intent.putExtra("ALARM", "alarm");
-        intent.putExtra("BUNDLE", bundle);
+        intent.putExtra("taskId", taskID);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, taskID, intent, PendingIntent.FLAG_IMMUTABLE);
 
         alarmManager.setRepeating(
@@ -43,12 +39,12 @@ public class TaskAlarm {
                 DAILY_INTERVAL,
                 pendingIntent
         );
-        Log.v("Alarm", "setDailyTask: ");
+        Log.v(TAG, "setDailyTask: ");
     }
 
     public void cancelTaskAlarm(Context context, int taskID) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Log.v("Alarm", "Cancel");
+        Log.d(TAG, "Cancel " + taskID);
         Intent intent = new Intent(context, TaskBroadcastReceiver.class);
         intent.putExtra("ALARM", "cancel");
         PendingIntent pendingIntent = PendingIntent.getBroadcast(

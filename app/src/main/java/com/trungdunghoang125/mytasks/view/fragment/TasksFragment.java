@@ -52,7 +52,7 @@ public class TasksFragment extends Fragment implements ItemClick {
 
         viewModel.getNavigateToTask().observe(getViewLifecycleOwner(), value -> {
             if (value != null) {
-                NavController navController = Navigation.findNavController(getView());
+                NavController navController = Navigation.findNavController(requireView());
                 Bundle bundle = new Bundle();
                 bundle.putInt("taskId", value);
                 navController.navigate(R.id.taskDetailFragment, bundle);
@@ -77,27 +77,23 @@ public class TasksFragment extends Fragment implements ItemClick {
     @Override
     public void onCbTaskDoneClick(Task task, Boolean done) {
         TaskAlarm taskAlarm = new TaskAlarm();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, task.hour);
+        calendar.set(Calendar.MINUTE, task.minute);
+        calendar.set(Calendar.SECOND, 0);
         if (done && task.isSetAlert) {
             task.isSetAlert = false;
-            taskAlarm.cancelTaskAlarm(getContext(), task.taskId);
+            taskAlarm.cancelTaskAlarm(requireContext(), task.taskId);
         }
 
         if (!done && task.isSetAlert && task.isDailyTask) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, task.hour);
-            calendar.set(Calendar.MINUTE, task.minute);
-            calendar.set(Calendar.SECOND, 0);
             task.isSetAlert = true;
-            taskAlarm.setDailyTask(getContext(), task.taskId, calendar);
+            taskAlarm.setDailyTask(requireContext(), task.taskId, calendar);
         }
 
         if (!done && task.isSetAlert && !task.isDailyTask) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, task.hour);
-            calendar.set(Calendar.MINUTE, task.minute);
-            calendar.set(Calendar.SECOND, 0);
             task.isSetAlert = false;
-            taskAlarm.setTodayTask(getContext(), task.taskId, calendar);
+            taskAlarm.setTodayTask(requireContext(), task.taskId, calendar);
         }
         viewModel.updateTaskDone(task, done);
     }

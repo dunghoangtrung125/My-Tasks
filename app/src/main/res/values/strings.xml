@@ -4,4 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="channel_name">Notification Service Channel</string>
     <string name="channel_description">This is channel for Notification of My Task app</string>
+    <string name="update_task">Update Task</string>
+    <string name="daily_task">Daily task?</string>
 </resources>

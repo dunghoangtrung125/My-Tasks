@@ -22,8 +22,8 @@ import com.trungdunghoang125.mytasks.viewModel.TaskDoneViewModel;
 import java.util.Calendar;
 
 public class TaskDoneFragment extends Fragment implements ItemClick {
-    FragmentTaskDoneBinding binding;
-    TaskDoneViewModel viewModel;
+    private FragmentTaskDoneBinding binding;
+    private TaskDoneViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,15 +44,15 @@ public class TaskDoneFragment extends Fragment implements ItemClick {
         binding.rcViewTasksDone.setAdapter(adapter);
 
         // observer live data
-        viewModel.getAllDoneTasks().observe(getViewLifecycleOwner(), value -> {
-            adapter.submitList(value);
+        viewModel.getAllDoneTasks().observe(getViewLifecycleOwner(), tasks -> {
+            adapter.submitList(tasks);
         });
 
         viewModel.getNavigateToTask().observe(getViewLifecycleOwner(), value -> {
             if (value != null) {
-                NavController navController = Navigation.findNavController(getView());
+                NavController navController = Navigation.findNavController(requireView());
                 Bundle bundle = new Bundle();
-                bundle.putLong("taskId", value);
+                bundle.putInt("taskId", value);
                 navController.navigate(R.id.taskDetailFragment, bundle);
                 viewModel.onTaskNavigated();
             }
@@ -83,12 +83,12 @@ public class TaskDoneFragment extends Fragment implements ItemClick {
             task.isSetAlert = true;
         }
         if (task.isSetAlert && task.isDailyTask) {
-            taskAlarm.setDailyTask(getContext(), task.taskId, calendar);
+            taskAlarm.setDailyTask(requireContext(), task.taskId, calendar);
         }
 
         if (task.isSetAlert && !task.isDailyTask) {
             if (System.currentTimeMillis() > calendar.getTimeInMillis()) {
-                taskAlarm.setTodayTask(getContext(), task.taskId, calendar);
+                taskAlarm.setTodayTask(requireContext(), task.taskId, calendar);
             }
         }
         viewModel.updateTaskDone(task, done);

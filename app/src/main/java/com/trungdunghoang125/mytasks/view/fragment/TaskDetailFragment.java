@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TimePicker;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -27,14 +26,13 @@ import java.util.Objects;
 
 public class TaskDetailFragment extends Fragment {
     private static final String TAG = "tranmyle1811";
-    FragmentTaskDetailBinding binding;
-    public TaskDetailViewModel viewModel;
-    int hour, minute;
-    Boolean isSetAlert = false;
-    Calendar calendar;
-    int requestCode;
-    TaskAlarm taskAlarm;
-    public static LifecycleOwner owner;
+    private FragmentTaskDetailBinding binding;
+    private TaskDetailViewModel viewModel;
+    private int hour, minute;
+    private Boolean isSetAlert = false;
+    private Calendar calendar;
+    private int requestCode;
+    private TaskAlarm taskAlarm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,8 +40,6 @@ public class TaskDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentTaskDetailBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
-        owner = this.getViewLifecycleOwner();
 
         int taskId = getArguments().getInt("taskId");
         Log.d(TAG, "onCreateView: " + taskId);
@@ -64,6 +60,15 @@ public class TaskDetailFragment extends Fragment {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                taskAlarm = new TaskAlarm();
+                                viewModel.getTask().observe(getViewLifecycleOwner(), new Observer<Task>() {
+                                    @Override
+                                    public void onChanged(Task task) {
+                                        Log.d(TAG, "onChanged: " + "delete confirm");
+                                        taskAlarm.cancelTaskAlarm(requireContext(), task.taskId);
+                                        task.isSetAlert = false;
+                                    }
+                                });
                                 viewModel.deleteTask();
                             }
                         })
@@ -104,10 +109,11 @@ public class TaskDetailFragment extends Fragment {
         viewModel.getTask().observe(getViewLifecycleOwner(), new Observer<Task>() {
             @Override
             public void onChanged(Task task) {
-                if (task.isSetAlert) {
+                Log.d(TAG, "onChanged: " + "getTask call");
+                if (Objects.requireNonNull(viewModel.getTask().getValue()).isSetAlert) {
                     binding.tvTimeDetail.setVisibility(View.VISIBLE);
                     binding.cbDailyTaskDetail.setVisibility(View.VISIBLE);
-                    //binding.cbDailyTaskDetail.setChecked(task.isDailyTask);
+                    binding.cbDailyTaskDetail.setChecked(task.isDailyTask);
                     String timeText = "Time alert: " + task.hour + ":" + task.minute;
                     binding.tvTimeDetail.setText(timeText);
 
@@ -142,11 +148,11 @@ public class TaskDetailFragment extends Fragment {
                     requestCode = viewModel.getTask().getValue().taskId;
                     taskAlarm = new TaskAlarm();
                     if (viewModel.getTask().getValue().isDailyTask) {
-                        taskAlarm.cancelTaskAlarm(getContext(), requestCode);
-                        taskAlarm.setDailyTask(getContext(), requestCode, calendar);
+                        taskAlarm.cancelTaskAlarm(requireContext(), requestCode);
+                        taskAlarm.setDailyTask(requireContext(), requestCode, calendar);
                     } else {
-                        taskAlarm.cancelTaskAlarm(getContext(), requestCode);
-                        taskAlarm.setTodayTask(getContext(), requestCode, calendar);
+                        taskAlarm.cancelTaskAlarm(requireContext(), requestCode);
+                        taskAlarm.setTodayTask(requireContext(), requestCode, calendar);
                     }
                 }
                 viewModel.updateTask();

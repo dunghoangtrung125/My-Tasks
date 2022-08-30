@@ -5,13 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.trungdunghoang125.mytasks.model.Task;
-import com.trungdunghoang125.mytasks.model.TaskRepository;
-
 public class TaskBroadcastReceiver extends BroadcastReceiver {
     private static final String TAG = "tranle1811";
-    TaskRepository repository;
-    Task task;
 
     @Override
     public void onReceive(Context context, Intent intent) {

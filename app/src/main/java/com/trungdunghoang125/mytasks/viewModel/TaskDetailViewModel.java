@@ -1,7 +1,6 @@
 package com.trungdunghoang125.mytasks.viewModel;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;

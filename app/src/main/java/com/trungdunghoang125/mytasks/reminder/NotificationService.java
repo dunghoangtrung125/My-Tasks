@@ -25,9 +25,9 @@ import com.trungdunghoang125.mytasks.view.activity.MainActivity;
 public class NotificationService extends LifecycleService {
     private static final String TAG = "tranmyle1811";
     private final String CHANNEL_ID = "NOTIFICATION_SERVICE_CHANNEL";
-    public Task task;
-    TaskRepository repository;
-    int taskID;
+    private Task task;
+    private TaskRepository repository;
+    private int taskID;
 
     @Override
     public void onCreate() {
@@ -39,7 +39,7 @@ public class NotificationService extends LifecycleService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
 
-        Log.v("Service", "Success");
+        Log.d(TAG, "onStartCommand: " + "call service success");
         taskID = intent.getIntExtra("taskId", 0);
 
         // query task from database by repository
