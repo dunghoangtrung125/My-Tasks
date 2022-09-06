@@ -21,13 +21,13 @@ import java.util.Calendar;
 import java.util.Random;
 
 public class AddTaskFragment extends Fragment {
-    FragmentAddTaskBinding binding;
-    AddTaskViewModel viewModel;
-    int hour, minute;
-    Calendar calendar;
-    int requestCode = -1;
-    Long systemMillis = 0L;
-    Boolean isSetAlert = false;
+    private FragmentAddTaskBinding binding;
+    private AddTaskViewModel viewModel;
+    private int hour, minute;
+    private Calendar calendar;
+    private int requestCode = -1;
+    private Long systemMillis = 0L;
+    private Boolean isSetAlert = false;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -53,7 +53,7 @@ public class AddTaskFragment extends Fragment {
                 viewModel.addTask(ID, taskName, taskDescription, false, taskImportance, systemMillis, isSetAlert, hour, minute, isDailyTask);
                 requireActivity().onBackPressed();
 
-                Boolean everydayTask = binding.cbDailyTask.isChecked();
+                boolean everydayTask = binding.cbDailyTask.isChecked();
                 if (requestCode != -1) {
                     if (everydayTask) {
                         setDailyTaskAlarm();
@@ -90,6 +90,12 @@ public class AddTaskFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void setTodayTask() {
         TaskAlarm taskAlarm = new TaskAlarm();
         if (calendar != null) {
@@ -102,12 +108,6 @@ public class AddTaskFragment extends Fragment {
         if (calendar != null) {
             taskAlarm.setDailyTask(getContext(), requestCode, calendar);
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 
     private void updateTimeText(Calendar calendar) {

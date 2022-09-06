@@ -17,7 +17,10 @@ import com.trungdunghoang125.mytasks.view.adapter.VPAdapter;
 import com.trungdunghoang125.mytasks.databinding.FragmentViewHolderBinding;
 
 public class ViewHolderFragment extends Fragment {
-    FragmentViewHolderBinding binding;
+    private final int MyTasksTab = 0;
+    private final int CompleteTasksTab = 1;
+
+    private FragmentViewHolderBinding binding;
     private TabLayout mTabLayout;
     private ViewPager2 mViewPager2;
     private VPAdapter mVPAdapter;
@@ -38,12 +41,12 @@ public class ViewHolderFragment extends Fragment {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 switch (position) {
-                    case 0:
+                    case MyTasksTab:
                         tab.setText("My tasks");
                         tab.setIcon(R.drawable.ic_work);
                         break;
 
-                    case 1:
+                    case CompleteTasksTab:
                         tab.setText("Complete Task");
                         tab.setIcon(R.drawable.ic_done);
                         break;
@@ -54,7 +57,7 @@ public class ViewHolderFragment extends Fragment {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(getView()).navigate(R.id.addTaskFragment);
+                Navigation.findNavController(requireView()).navigate(R.id.addTaskFragment);
             }
         });
 

@@ -8,7 +8,7 @@ import com.trungdunghoang125.mytasks.view.fragment.TaskDoneFragment;
 import com.trungdunghoang125.mytasks.view.fragment.TasksFragment;
 
 public class VPAdapter extends FragmentStateAdapter {
-
+    private final int TaskDoneFragmentPosition = 1;
 
     public VPAdapter(@NonNull Fragment fragment) {
         super(fragment);
@@ -18,7 +18,7 @@ public class VPAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position) {
-            case 1:
+            case TaskDoneFragmentPosition:
                 return new TaskDoneFragment();
             default:
                 return new TasksFragment();

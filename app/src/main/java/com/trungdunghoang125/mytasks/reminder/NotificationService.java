@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -12,9 +13,9 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
-import androidx.lifecycle.LifecycleService;
 import androidx.navigation.NavDeepLinkBuilder;
 
 import com.trungdunghoang125.mytasks.R;
@@ -22,9 +23,13 @@ import com.trungdunghoang125.mytasks.model.Task;
 import com.trungdunghoang125.mytasks.model.TaskRepository;
 import com.trungdunghoang125.mytasks.view.activity.MainActivity;
 
-public class NotificationService extends LifecycleService {
-    private static final String TAG = "tranmyle1811";
-    private final String CHANNEL_ID = "NOTIFICATION_SERVICE_CHANNEL";
+
+public class NotificationService extends Service {
+    private static final String TAG = "trungdunghoang125";
+    private static final String CHANNEL_ID = "NOTIFICATION_SERVICE_CHANNEL";
+    private static final int NOTIFICATION_CHANNEL_ID = 1;
+    private static final String NOTIFICATION_BUTTON_TITTLE = "Mark as completed";
+    private static final String CANCEL_ALARM_MESSAGE = "cancel";
     private Task task;
     private TaskRepository repository;
     private int taskID;
@@ -40,7 +45,7 @@ public class NotificationService extends LifecycleService {
         super.onStartCommand(intent, flags, startId);
 
         Log.d(TAG, "onStartCommand: " + "call service success");
-        taskID = intent.getIntExtra("taskId", 0);
+        taskID = intent.getIntExtra(getString(R.string.task_id_code), 0);
 
         // query task from database by repository
         repository = new TaskRepository(getApplication());
@@ -49,7 +54,7 @@ public class NotificationService extends LifecycleService {
         }).start();
 
         Bundle bundle = new Bundle();
-        bundle.putInt("taskId", taskID);
+        bundle.putInt(getString(R.string.task_id_code), taskID);
 
         PendingIntent fullScreenPendingIntent = new NavDeepLinkBuilder(getApplicationContext())
                 .setComponentName(MainActivity.class)
@@ -58,9 +63,8 @@ public class NotificationService extends LifecycleService {
                 .setArguments(bundle)
                 .createPendingIntent();
 
-        Intent cancelIntent = new Intent(this, TaskBroadcastReceiver.class);
-        cancelIntent.putExtra("ALARM", "cancel");
-        PendingIntent cancelPendingIntent = PendingIntent.getBroadcast(this, 0, cancelIntent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent cancelPendingIntent = TaskBroadcastReceiver.cancelAlarmPendingIntent(this, 0);
+
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(task.taskName)
@@ -70,20 +74,19 @@ public class NotificationService extends LifecycleService {
                 .setSound(Settings.System.DEFAULT_ALARM_ALERT_URI)
                 .setAutoCancel(true)
                 .setColor(Color.BLUE)
-                .addAction(R.drawable.ic_done, "Mark as completed", cancelPendingIntent)
+                .addAction(R.drawable.ic_done, NOTIFICATION_BUTTON_TITTLE, cancelPendingIntent)
                 .setFullScreenIntent(fullScreenPendingIntent, true);
 
         Notification taskNotification = notificationBuilder.build();
 
-        startForeground(1, taskNotification);
+        startForeground(NOTIFICATION_CHANNEL_ID, taskNotification);
 
         return START_NOT_STICKY;
     }
 
     @Nullable
     @Override
-    public IBinder onBind(Intent intent) {
-        super.onBind(intent);
+    public IBinder onBind(@NonNull Intent intent) {
         return null;
     }
 

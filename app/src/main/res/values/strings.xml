@@ -6,4 +6,16 @@
     <string name="channel_description">This is channel for Notification of My Task app</string>
     <string name="update_task">Update Task</string>
     <string name="daily_task">Daily task?</string>
+    <string name="task_description">Task description</string>
+    <string name="enter_title">Enter title</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="done">Done?</string>
+    <string name="enter_new_task_title">Enter new task title</string>
+    <string name="add_details">Add details</string>
+    <string name="save">Save</string>
+    <string name="alert_tittle">Delete this task?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="create_alarm_key">ALARM</string>
+    <string name="task_id_code">taskId</string>
 </resources>

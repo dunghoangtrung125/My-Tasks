@@ -31,7 +31,7 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/margin8"
         android:src="@drawable/ic_add_task"
         app:layout_anchor="@id/linear"
         app:layout_anchorGravity="bottom|center" />

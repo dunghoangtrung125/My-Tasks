@@ -13,13 +13,12 @@ import java.util.List;
 
 public class TasksViewModel extends AndroidViewModel {
     private TaskRepository repository;
-    private MutableLiveData<Integer> _navigateToTask = new MutableLiveData<Integer>();
+    private MutableLiveData<Integer> navigateToTask = new MutableLiveData<Integer>();
+    private final LiveData<List<Task>> allTasks;
 
     public LiveData<Integer> getNavigateToTask() {
-        return _navigateToTask;
+        return navigateToTask;
     }
-
-    private final LiveData<List<Task>> allTasks;
 
     public TasksViewModel(Application application) {
         super(application);
@@ -32,11 +31,11 @@ public class TasksViewModel extends AndroidViewModel {
     }
 
     public void onTaskClicked(int taskId) {
-        _navigateToTask.setValue(taskId);
+        navigateToTask.setValue(taskId);
     }
 
     public void onTaskNavigated() {
-        _navigateToTask.setValue(null);
+        navigateToTask.setValue(null);
     }
 
     public void updateTaskDone(Task task, Boolean state) {

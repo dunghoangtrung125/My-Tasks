@@ -1,6 +1,5 @@
 package com.trungdunghoang125.mytasks.view.fragment;
 
-import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -10,10 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TimePicker;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.trungdunghoang125.mytasks.R;
 import com.trungdunghoang125.mytasks.databinding.FragmentTaskDetailBinding;
 import com.trungdunghoang125.mytasks.model.Task;
 import com.trungdunghoang125.mytasks.reminder.TaskAlarm;
@@ -25,7 +27,7 @@ import java.util.Calendar;
 import java.util.Objects;
 
 public class TaskDetailFragment extends Fragment {
-    private static final String TAG = "tranmyle1811";
+    private static final String TAG = "trungdunghoang125";
     private FragmentTaskDetailBinding binding;
     private TaskDetailViewModel viewModel;
     private int hour, minute;
@@ -35,13 +37,13 @@ public class TaskDetailFragment extends Fragment {
     private TaskAlarm taskAlarm;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentTaskDetailBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        int taskId = getArguments().getInt("taskId");
+        int taskId = requireArguments().getInt(getString(R.string.task_id_code));
         Log.d(TAG, "onCreateView: " + taskId);
 
         // create instance of view model by view model factory
@@ -55,9 +57,9 @@ public class TaskDetailFragment extends Fragment {
         binding.btnDeleteTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage("Delete this task?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                builder.setMessage(R.string.alert_tittle)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 taskAlarm = new TaskAlarm();
@@ -72,7 +74,7 @@ public class TaskDetailFragment extends Fragment {
                                 viewModel.deleteTask();
                             }
                         })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.cancel();

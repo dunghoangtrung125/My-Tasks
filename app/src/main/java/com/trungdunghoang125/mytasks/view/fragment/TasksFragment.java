@@ -22,7 +22,7 @@ import java.util.Calendar;
 
 public class TasksFragment extends Fragment implements ItemClick {
     private FragmentTasksBinding binding;
-    public TasksViewModel viewModel;
+    private TasksViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

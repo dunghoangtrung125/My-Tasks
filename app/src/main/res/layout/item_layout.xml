@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="@dimen/padding8dp">
 
         <CheckBox
             android:id="@+id/cb_task_done"
@@ -24,9 +24,9 @@
             android:id="@+id/tv_task_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginEnd="@dimen/margin8"
+            android:layout_marginBottom="@dimen/margin8"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/cb_star_item"
@@ -37,9 +37,9 @@
             android:id="@+id/tv_task_detail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:textSize="13sp"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginEnd="@dimen/margin8"
+            android:textSize="14sp"
 
             app:layout_constraintEnd_toStartOf="@+id/cb_star_item"
             app:layout_constraintStart_toEndOf="@id/cb_task_done"

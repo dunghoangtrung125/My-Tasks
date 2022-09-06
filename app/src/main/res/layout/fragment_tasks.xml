@@ -25,9 +25,9 @@
                 android:id="@+id/rc_view_tasks_list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/margin8"
                 android:layout_weight="1"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </LinearLayout>
 
@@ -35,10 +35,10 @@
             android:id="@+id/img_all_task_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/all_task_done"
-            app:layout_anchor="@id/linear_remain_task"
-            app:layout_anchorGravity="center"
             android:scaleType="fitCenter"
-            android:visibility="gone"/>
+            android:src="@drawable/all_task_done"
+            android:visibility="gone"
+            app:layout_anchor="@id/linear_remain_task"
+            app:layout_anchorGravity="center" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

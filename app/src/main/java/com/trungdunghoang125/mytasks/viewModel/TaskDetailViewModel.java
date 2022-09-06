@@ -11,14 +11,13 @@ import com.trungdunghoang125.mytasks.model.Task;
 import com.trungdunghoang125.mytasks.model.TaskRepository;
 
 public class TaskDetailViewModel extends AndroidViewModel {
-    TaskRepository repository;
+    private TaskRepository repository;
     private final int taskId;
     private LiveData<Task> task;
-    private MutableLiveData<Boolean> _navigateBack = new MutableLiveData<Boolean>(false);
-    private LiveData<Boolean> navigateBack;
+    private MutableLiveData<Boolean> navigateBack = new MutableLiveData<Boolean>(false);
 
     public LiveData<Boolean> getNavigateBack() {
-        return _navigateBack;
+        return navigateBack;
     }
 
     public TaskDetailViewModel(@NonNull Application application, int taskId) {
@@ -34,15 +33,15 @@ public class TaskDetailViewModel extends AndroidViewModel {
 
     public void updateTask() {
         repository.update(task.getValue());
-        _navigateBack.setValue(true);
+        navigateBack.setValue(true);
     }
 
     public void deleteTask() {
         repository.delete(task.getValue());
-        _navigateBack.setValue(true);
+        navigateBack.setValue(true);
     }
 
     public void isNavigated() {
-        _navigateBack.setValue(false);
+        navigateBack.setValue(false);
     }
 }
