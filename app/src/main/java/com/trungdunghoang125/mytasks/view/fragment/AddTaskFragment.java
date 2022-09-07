@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.trungdunghoang125.mytasks.Utilities;
 import com.trungdunghoang125.mytasks.databinding.FragmentAddTaskBinding;
 import com.trungdunghoang125.mytasks.reminder.TaskAlarm;
 import com.trungdunghoang125.mytasks.viewModel.AddTaskViewModel;
@@ -28,6 +29,7 @@ public class AddTaskFragment extends Fragment {
     private int requestCode = -1;
     private Long systemMillis = 0L;
     private Boolean isSetAlert = false;
+    private Toast toast;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -59,8 +61,9 @@ public class AddTaskFragment extends Fragment {
                         setDailyTaskAlarm();
                     } else setTodayTask();
                 }
-            } else
-                Toast.makeText(getContext(), "Please enter a task name", Toast.LENGTH_SHORT).show();
+            } else {
+                Utilities.ShowToast.initToast(requireContext(), toast, "Please enter a task name");
+            }
         });
 
         binding.imgShowDetail.setOnClickListener(view1 -> binding.edtAddTaskDetail.setVisibility(View.VISIBLE));
@@ -99,14 +102,14 @@ public class AddTaskFragment extends Fragment {
     private void setTodayTask() {
         TaskAlarm taskAlarm = new TaskAlarm();
         if (calendar != null) {
-            taskAlarm.setTodayTask(getContext(), requestCode, calendar);
+            taskAlarm.setTodayTask(requireContext(), requestCode, calendar);
         }
     }
 
     private void setDailyTaskAlarm() {
         TaskAlarm taskAlarm = new TaskAlarm();
         if (calendar != null) {
-            taskAlarm.setDailyTask(getContext(), requestCode, calendar);
+            taskAlarm.setDailyTask(requireContext(), requestCode, calendar);
         }
     }
 

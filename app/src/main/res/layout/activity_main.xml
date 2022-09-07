@@ -16,7 +16,6 @@
         android:textSize="25sp" />
 
     <androidx.fragment.app.FragmentContainerView
-
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
@@ -24,6 +23,6 @@
         android:layout_weight="1"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph">
-
     </androidx.fragment.app.FragmentContainerView>
+
 </LinearLayout>

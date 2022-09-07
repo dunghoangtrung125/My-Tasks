@@ -1,7 +1,6 @@
 package com.trungdunghoang125.mytasks.view.fragment;
 
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,14 +9,15 @@ import android.view.ViewGroup;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.trungdunghoang125.mytasks.R;
+import com.trungdunghoang125.mytasks.Utilities;
 import com.trungdunghoang125.mytasks.databinding.FragmentTaskDetailBinding;
 import com.trungdunghoang125.mytasks.model.Task;
+import com.trungdunghoang125.mytasks.reminder.AlertDialogCallback;
 import com.trungdunghoang125.mytasks.reminder.TaskAlarm;
 import com.trungdunghoang125.mytasks.viewModel.TaskDetailViewModel;
 import com.trungdunghoang125.mytasks.viewModel.TaskDetailViewModelFactory;
@@ -57,32 +57,21 @@ public class TaskDetailFragment extends Fragment {
         binding.btnDeleteTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                builder.setMessage(R.string.alert_tittle)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                Utilities.AlertDeleteTask.Notice(requireContext(), new AlertDialogCallback() {
+                    @Override
+                    public void delete() {
+                        taskAlarm = new TaskAlarm();
+                        viewModel.getTask().observe(getViewLifecycleOwner(), new Observer<Task>() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                taskAlarm = new TaskAlarm();
-                                viewModel.getTask().observe(getViewLifecycleOwner(), new Observer<Task>() {
-                                    @Override
-                                    public void onChanged(Task task) {
-                                        Log.d(TAG, "onChanged: " + "delete confirm");
-                                        taskAlarm.cancelTaskAlarm(requireContext(), task.taskId);
-                                        task.isSetAlert = false;
-                                    }
-                                });
-                                viewModel.deleteTask();
+                            public void onChanged(Task task) {
+                                Log.d(TAG, "onChanged: " + "delete confirm");
+                                taskAlarm.cancelTaskAlarm(requireContext(), task.taskId);
+                                task.isSetAlert = false;
                             }
-                        })
-                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        })
-                        .setCancelable(false)
-                        .create()
-                        .show();
+                        });
+                        viewModel.deleteTask();
+                    }
+                });
             }
         });
 

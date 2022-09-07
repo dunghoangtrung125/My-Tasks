@@ -9,8 +9,6 @@ import java.util.Calendar;
 
 public class TaskAlarm {
     private static final String TAG = "trungdunghoang125";
-    private static final String ALARM_MESSAGE = "alarm";
-    private static final String CANCEL_ALARM_MESSAGE = "cancel";
 
     public void setTodayTask(Context context, int taskID, Calendar calendar) {
         // if alarm time is pass, don't create alarm
